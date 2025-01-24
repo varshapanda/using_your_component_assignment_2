@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import PostCard from './components/postcard'
 import './App.css'
 
 function App() {
@@ -28,12 +29,23 @@ function App() {
       isLiked: false,
     },
   ];
+  
+  const [posts, setPosts] = useState(initialPosts);
+
+  const handleLikeToggle = (postId) => {
+    const updatedPostsData = posts.map(post =>
+      post.id === postId ? { ...post, isLiked: !post.isLiked } : post
+    );
+    setPosts(updatedPostsData);
+  };
 
   return (
-    <>
-      
-    </>
-  )
+    <div>
+      {posts.map(postData => (
+        <PostCard key={postData.id} postData={postData} onToggleLike={handleLikeToggle} />
+      ))}
+    </div>
+  );
 }
 
 export default App
